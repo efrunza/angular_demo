@@ -4,7 +4,7 @@
 
 This article details implementing a demo website using Angular and NodeJS.
 
-![Components communication's diagram](./Images/angular_standards1.webp)
+![Components communication's diagram](./Images/angular_demo1.png)
 
 ## Online article
 Details about this project can be read in my blog's article here: 
