@@ -1,0 +1,112 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport="true"
+    position="start"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    opened="false"
+  >
+    <mat-toolbar color="primary" fxLayoutAlign="end center">
+      <button
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <mat-nav-list>
+      <a href="#" mat-list-item (click)="onHomeClick()">
+        <mat-icon>home</mat-icon>
+        <span fxFlexOffset="1em">Home</span>
+      </a>
+
+      <a href="#" mat-list-item>
+        <span fxFlexOffset="1em">Eugen Frunza</span>
+      </a>
+
+      <a href="#" mat-list-item (click)="onSignOutClick()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span fxFlexOffset="1em">Sign out</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" fxLayout="column">
+      <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+        <button mat-icon-button (click)="drawer.toggle()" fxHide.gt-sm>
+          <mat-icon>menu</mat-icon>
+        </button>
+        <div
+          fxLayoutAlign="center center"
+          fxLayout="row"
+          fxFlex.lt-md="1 1 auto"
+        >
+          <img
+            (click)="onHomeClick()"
+            class="seneca-logo"
+            fxFlexAlign.lt-sm="center"
+            fxFlex.lt-sm="1 1 auto"
+            src="../../assets/img/logo_white.svg"
+          />
+          <p class="header__text" fxHide.lt-lg>
+            Online Application for International Students
+          </p>
+        </div>
+        <div
+          fxLayout="row"
+          fxFlex="1 1 auto"
+          fxLayoutAlign="end center"
+          fxHide.lt-md
+        >
+          <button mat-button (click)="onHomeClick()">
+            <mat-icon>home</mat-icon>
+            Home
+          </button>
+          <button mat-button>
+            Eugen Frunza
+          </button>
+          <button mat-button (click)="onSignOutClick()">
+            <mat-icon>exit_to_app</mat-icon>
+            Sign out
+          </button>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <div
+      fxLayout="row"
+      fxLayout.lt-md="end"
+      fxLayoutAlign="center"
+      class="sub-header__container"
+    >
+      <div
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+        fxFlex="85%"
+        fxFlex.lt-md="95%"
+        class="app-number-container"
+      >
+        <h2 class="sub-header__title">Welcome to Seneca College</h2>
+        <div
+          fxLayout="column"
+          fxLayoutAlign="center end"
+          fxLayoutGap=".5em"
+          fxFlexAlign="end"
+          *ngIf="!isAtHomeScreen"
+        >
+          <p *ngIf="applicationId">
+            <span fxHide.lt-md>Application Number: </span>{{ applicationId }}
+          </p>
+          <p style="text-align: end" *ngIf="applicationStatus">
+            <span fxHide.lt-md>Status: </span>{{ applicationStatus }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

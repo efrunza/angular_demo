@@ -1,0 +1,32 @@
+<div *ngIf="displayedName" fxFlexFill>
+  <app-main-nav>
+    <div fxLayout="row wrap" fxLayoutAlign="center start">
+      <div fxLayout="row" fxFlexFill fxLayoutAlign="center">
+        <div
+          fxLayout="column"
+          fxFlex="85%"
+          class='app-container'
+          fxFlex.lt-md="95%"
+          fxFlexAlign="center"
+          fxLayoutAlign="center"
+        >
+          <router-outlet></router-outlet>
+          <ng-container></ng-container>
+
+          <ng-template #spin>
+            <div
+              fxLayout="column"
+              fxLayoutAlign="center center"
+              fxLayoutGap="2em"
+            >
+              <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+              <h3>{{ loadingText }}</h3>
+            </div>
+          </ng-template>
+          
+        </div>
+      </div>
+    </div>
+    <app-contact-support></app-contact-support>
+  </app-main-nav>
+</div>

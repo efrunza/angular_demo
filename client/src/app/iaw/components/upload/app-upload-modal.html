@@ -1,0 +1,73 @@
+
+<mat-dialog-content class="mat-typography uploadCom" >
+  <!-- Notes on identification-->
+
+  <div *ngIf="data.name[0] === true"><p>
+  <h2>Identification</h2>
+<ul>
+  <li>Photo and signature pages of your passport (Required)</li>
+   <li>Study Permit( if available)</li>
+</ul>
+  </div>
+  
+  <!-- Notes on Highschool Graduates-->
+  <div *ngIf="data.name[1] === true">
+    <ul>
+      <h2> Complete High School Transcripts (Required)</h2>
+      <li>
+        Please update your most recent and updated highschool transcripts. Including all completed
+        years and courses in highschool/secondary school </li><br>
+
+      <h2>High School/Secondary School Diploma (Certificate of Completion)</h2>
+      <li> 
+      If you have not yet graduated highschool, Please upload your most recent
+      grades and midterms instead. Midterm grades can be uploaded under the
+      diploma section. Additional Supporting documents can be uploaded under the other document section.
+    </li>
+    </ul>
+  </div>
+
+  <!-- Notes on Post Secondary Graduates-->
+  <div *ngIf="data.name[2] === true">
+    <ul>
+      <h2> Complete Post Secondary/University/College Transcripts (Required)</h2>
+      <li>
+        Please update your most recent and updated post secondary transcripts. Including all completed
+        years and courses in highschool/secondary school </li><br>
+
+      <h2>High School/Secondary School Diploma (Certificate of Completion)</h2>
+      <li> 
+      If you have not yet graduated post secondary school, Please upload your most recent
+      grades and midterms instead. Midterm grades can be uploaded under the
+      diploma section. Additional Supporting documents can be uploaded under the other document section.
+    </li>
+    </ul>
+  </div>
+
+  <!-- Notes on Eng Prof-->
+  <div *ngIf="data.name[3] === true">
+    <h2>Proof of English Proficiency (Required)</h2>
+    <ul>
+      <li>
+   Students must submit their valid TOEFL/IELTS PTE scores to 
+   International Admissions. Only tests taken in the last 2 years 
+   are considered valid.
+      </li>
+  </ul>
+  </div>
+
+  <!--Others (if applicable)-->
+  <div *ngIf="data.name[4] === true">
+    <ul>
+      <h2>Others (if applicable)</h2>
+      <li>
+      You may use this section to upload other important documents. Can upload 5
+      additional documents in this section.
+    </li>
+    </ul>
+  </div>
+  <mat-dialog-actions   fxLayoutAlign="flex-end">
+      <button mat-button mat-dialog-close>Exit</button>
+    </mat-dialog-actions>
+</mat-dialog-content>
+

@@ -1,0 +1,21 @@
+{
+  "name": "seneca-angular-server-error-interceptor",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^7.2.0",
+    "@angular/core": "^7.2.0"
+  },
+  "main": "bundles/seneca-angular-server-error-interceptor.umd.js",
+  "module": "fesm5/seneca-angular-server-error-interceptor.js",
+  "es2015": "fesm2015/seneca-angular-server-error-interceptor.js",
+  "esm5": "esm5/seneca-angular-server-error-interceptor.js",
+  "esm2015": "esm2015/seneca-angular-server-error-interceptor.js",
+  "fesm5": "fesm5/seneca-angular-server-error-interceptor.js",
+  "fesm2015": "fesm2015/seneca-angular-server-error-interceptor.js",
+  "typings": "seneca-angular-server-error-interceptor.d.ts",
+  "metadata": "seneca-angular-server-error-interceptor.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

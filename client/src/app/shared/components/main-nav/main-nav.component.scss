@@ -1,0 +1,41 @@
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
+@import 'theme';
+.seneca-logo {
+  height: 2rem;
+  cursor: pointer;
+}
+
+.header {
+  &__text {
+    @include seneca-fonts-common(400, $large-font-size);
+    padding: 0 10px;
+    text-transform: capitalize;
+    line-height: 100%;
+    margin-top: 10px;
+  }
+}
+
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 60vw;
+}
+
+.sub-header {
+  &__container {
+    padding: 1.5em 0;
+  }
+
+  &__title {
+    color: mat-color($seneca-app-primary);
+    font-family: $secondary-font-family, Times, serif;
+    @include seneca-fonts-common(600, $header-font-size);
+  }
+
+  &__sub-title {
+    @include seneca-fonts-common($medium-font-weight, 18px);
+  }
+}

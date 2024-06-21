@@ -1,0 +1,76 @@
+{
+  "configVersion": 1,
+  "timestamp": 1572034736896,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/4.720fdffac934c314ebd8.js",
+        "/5.f4a66d4bb689a8f487f0.js",
+        "/favicon.ico",
+        "/index.html",
+        "/main.b6ea65f7c9a8928874e8.js",
+        "/polyfills.dc2bac00d32f532bf979.js",
+        "/runtime.b64a47f41f3fdc457a55.js",
+        "/styles.03e34b71a7161f813374.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "/assets/img/bg.png",
+        "/assets/img/logo_white.svg",
+        "/assets/img/programBanner.img_11.jpg",
+        "/assets/img/seneca-favicon-16.png",
+        "/assets/img/seneca-favicon-32.png",
+        "/assets/img/seneca-logo-red.png",
+        "/assets/img/seneca-logo-white.png",
+        "/assets/img/seneca-logo.svg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/4.720fdffac934c314ebd8.js": "f9881345560175ccbbe544715d020e2b9aed7802",
+    "/5.f4a66d4bb689a8f487f0.js": "0feefd4c8f46f4f18a17632ffe9f18ca76347907",
+    "/assets/img/bg.png": "9781669f536bdc8793a5defcbb0b90e649b40dde",
+    "/assets/img/logo_white.svg": "fb50b598ca552180abe075a3f94fcc49a335e988",
+    "/assets/img/programBanner.img_11.jpg": "7d95f773a1bc21c259c074891925814d7d1ab248",
+    "/assets/img/seneca-favicon-16.png": "2e60db4a725e0a20c3bc181f3fab29fb4ef88ee5",
+    "/assets/img/seneca-favicon-32.png": "aaeba14b8e88ebb090d0dd79cfe7b40a4314756e",
+    "/assets/img/seneca-logo-red.png": "3fff27f36f6abf6a71b5c481b82f990ad2bfbb8c",
+    "/assets/img/seneca-logo-white.png": "ce0242104dd6721268a6abd891561b28bce51ba0",
+    "/assets/img/seneca-logo.svg": "64fde320fcafb1ca46bc089caaac8a78baa14d70",
+    "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
+    "/index.html": "26ecfb03053a4c9c71c9bc80af982a3793a82da1",
+    "/main.b6ea65f7c9a8928874e8.js": "8fcce1fe5c7ca1ac1f5eea3f74e6a7b949a6871e",
+    "/polyfills.dc2bac00d32f532bf979.js": "6946e10a03311677a01490b8e91741668e64e17e",
+    "/runtime.b64a47f41f3fdc457a55.js": "cf43af8412894db3c361cabde129861803903ec2",
+    "/styles.03e34b71a7161f813374.css": "5c56ef21cc456c52c2b276aeb6b8bb8431545045"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}

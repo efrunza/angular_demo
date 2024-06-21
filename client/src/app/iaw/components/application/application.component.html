@@ -1,0 +1,10 @@
+<mat-card *ngIf="!loading && !loadingError; else spin" class="seneca-card seneca-card-form-page">
+  <app-form-stepper></app-form-stepper>
+</mat-card>
+
+<ng-template #spin>
+  <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="2em">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    <h3>Loading Application Information... Please Wait</h3>
+  </div>
+</ng-template>

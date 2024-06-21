@@ -1,0 +1,14 @@
+@import '../../node_modules/@angular/material/theming';
+@import 'seneca-palette';
+@include mat-core();
+
+$seneca-app-primary: mat-palette($seneca-primary-red-palette);
+$seneca-app-accent: mat-palette($seneca-primary-red-palette);
+$seneca-app-warn: mat-palette($mat-red);
+
+$seneca-app-theme: mat-light-theme(
+  $seneca-app-primary,
+  $seneca-app-accent,
+  $seneca-app-warn
+);
+

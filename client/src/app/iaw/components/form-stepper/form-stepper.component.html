@@ -1,0 +1,27 @@
+<mat-horizontal-stepper
+  *ngIf="applicationStatus !== applicationStatusObject.paid.value; else loadReviewPage"
+  linear="true"
+  labelPosition="bottom"
+  (selectionChange)="selectionChanged($event)"
+  [selectedIndex]="selectedStepIndex"
+  #stepper
+>
+  <ng-template matStepperIcon="edit"> <mat-icon>check</mat-icon> </ng-template>
+  <mat-step
+    *ngFor="let step of steps; let stepIndex = index"
+    [stepControl]="step.formGroup"
+    [label]="step.title"
+    editable="true"
+    [completed]="isComplete(stepIndex)"
+  >
+    <router-outlet
+      #formComponent *ngIf="matchRoute(step.formRoute, stepIndex, selectedStepIndex)">
+    </router-outlet>
+  </mat-step>
+</mat-horizontal-stepper>
+
+<ng-template #loadReviewPage>
+  <router-outlet
+    #formComponent *ngIf="router.url.match('/application/review-submit')"
+  ></router-outlet>
+</ng-template>

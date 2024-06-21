@@ -1,0 +1,311 @@
+<mat-horizontal-stepper linear #stepper>
+    
+    <mat-step [stepControl]="StepOneFormPersonalInfo">
+
+        <!--First stepper page-->
+        <form [formGroup]="StepOneFormPersonalInfo" #personalInfo="ngForm" (ngSubmit)="form1()">
+
+            <input type="hidden" formControlName="Id" value="0">
+            <ng-template matStepLabel>Personal Information</ng-template>
+
+            <div class="border card px-2">
+
+                <!--First header-->
+                <div class="card card-header bg-secondary text-light mt-2">Personal Information</div>
+
+                <!--Title row-->
+                <div class="form-row mt-2">
+                    <div class="form-container col-md-6 mb-3">
+                        <mat-form-field>
+                            <mat-label>Title</mat-label>
+                            <mat-select formControlName="TitleId" required>
+                                <mat-option value="m">Mr</mat-option>
+                                <mat-option value="s">Miss</mat-option>                           
+                            </mat-select>                       
+                            <mat-error *ngIf="StepOneFormPersonalInfo.get('TitleId').invalid">
+                                {{DisplayErrorMessage(TitleId)}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!--Surname/family name and Given Name row-->
+                <div class="form-row">
+                    <div class="form-container col-md-6 mb-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Surname/family name" formControlName="LastName" required>
+                        </mat-form-field>
+                        <mat-error *ngIf="StepOneFormPersonalInfo.get('LastName').invalid">
+                            {{DisplayErrorMessage(LastName)}}
+                        </mat-error>
+                    </div>
+                    <div class=" form-container col-md-6 mb-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Given name" formControlName="FirstName" required>
+                        </mat-form-field>
+                        <mat-error *ngIf="StepOneFormPersonalInfo.get('FirstName').invalid">
+                            {{DisplayErrorMessage(FirstName)}}
+                        </mat-error>
+                    </div>
+                </div>
+
+                 <!--Gender and Date of birth row-->
+                <div class="form-row">
+                    <div class="form-container col-md-6 mb-3">
+                        <mat-form-field>
+                            <mat-label>Gender</mat-label>
+                            <mat-select formControlName="GenderId" required>
+                                <mat-option value="m">Male</mat-option>
+                                <mat-option value="f">Female</mat-option>
+                                <mat-option value="x">Other gender </mat-option>
+                                <mat-option value="u">Unknown</mat-option>
+                            </mat-select>                           
+                            <mat-error *ngIf="StepOneFormPersonalInfo.get('GenderId').invalid">
+                                {{DisplayErrorMessage(GenderId)}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-container col-md-6 mb-3">
+                        <mat-form-field>
+                            <input matInput [matDatepicker]="dob" placeholder="Date of birth">
+                            <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                            <mat-datepicker #dob></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                 <!--Birth Country and Citizenship Country row-->
+                <div class="form-row">
+                    <div class="form-container col-md-6 mb-3">
+                        <mat-form-field>
+                            <mat-label>Birth Country</mat-label>
+                            <mat-select formControlName="BirthCountryId" required>                                                             
+                                    <mat-option value="ca">Canada</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="BirthCountryId.hasError('required')">Please choose birth country
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-container col-md-6 mb-3">
+                        <mat-form-field>
+                            <mat-label>Citizenship Country</mat-label>
+                            <mat-select formControlName="CitizenshipCountryId" required>
+                                <mat-option value="ca">Canada</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="CitizenshipCountryId.hasError('required')">Please choose birth country
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                 <!--Application Country and Primary Language row-->
+                <div class="form-row">
+                    <div class="form-container col-md-6 mb-3">
+                        <mat-form-field>
+                            <mat-label>Application Country</mat-label>
+                            <mat-select formControlName="ApplicationCountryId" required>
+                                <mat-option value="ca">Canada</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="ApplicationCountryId.hasError('required')">Please choose birth country
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-container col-md-6 mb-3">
+                        <mat-form-field>
+                            <mat-label>Primary language</mat-label>
+                            <mat-select formControlName="PrimaryLanguageId" required>                               
+                                <mat-option value="en">English</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="PrimaryLanguageId.hasError('required')">Please choose primary language
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!--Second header-->
+                <div class="card card-header bg-secondary text-light">Primary address</div>
+
+                <!-- Country and City/Town row-->
+                <div class="form-row mt-2">                    
+                    <div class="form-container col-md-6 mb-3">
+                        <mat-form-field>
+                            <mat-label>Country</mat-label>
+                            <mat-select formControlName="PrimaryCountryId" required>                                
+                                <mat-option value="ca">Canada</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="PrimaryCountryId.hasError('required')">Please choose birth
+                                country</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div *ngIf="ShowHideProvinceState==1" class="form-container col-md-6 mb-3">
+                        <mat-form-field>
+                            <mat-label>Province/State</mat-label>
+                            <mat-select formControlName="StateProvince" required>                               
+                                <mat-option value="on">Ontario</mat-option>
+                            </mat-select>                           
+                        </mat-form-field>
+                    </div>
+                    <div class="form-container col-md-6 mb-3">
+                        <mat-form-field>
+                            <input matInput placeholder="City/Town" formControlName="PrimaryCityTown" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Street Address Line 1 and 2 row-->
+                <div class="form-row">
+                    <div class="form-container col-md-6 mb-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Street address line 1" formControlName="PrimaryAddressStreetLine1" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-container col-md-6 mb-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Street address line 2" formControlName="PrimaryAddressStreetLine2" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                  <!-- Postal Code / Zip and apartment row-->
+                <div class="form-row">
+                    <div class="form-container col-md-6 mb-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Postal code/zip" formControlName="PrimaryPostalCode" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-container col-md-6 mb-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Apartment #" formControlName="PrimaryApartmentNo" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Primary phone number and SecondaryPhone row-->
+                <div class="form-row">
+                    <div class="form-container col-md-6 mb-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Primary phone number" formControlName="PrimaryPhone" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-container col-md-6 mb-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Secondary phone number" formControlName="SecondaryPhone"
+                                required>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!--Third header-->
+                <div class="card card-header bg-secondary text-light">Mailing address</div>
+
+                <div class="mt-2">
+                    <label>Is your mailing address same as your primary address? &nbsp;</label>
+                    <mat-slide-toggle formControlName="mailingSameAsParm">Yes</mat-slide-toggle>
+                </div>
+
+                <div *ngIf="isMailingSame!=1">
+
+                    <!-- Country and City/Town row-->
+                    <div class="form-row">
+
+                        <div class="form-container col-md-6 mb-3">
+                            <mat-form-field>
+                                <mat-label>Country</mat-label>
+                                <mat-select formControlName="MailingCountryId" required>                                   
+                                    <mat-option value="ca">Canada</mat-option>
+                                </mat-select>                              
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-container col-md-6 mb-3"  *ngIf="ShowHideMailingProvinceState==1">
+                            <mat-form-field>
+                                <mat-label>Province/State</mat-label>
+                                <mat-select formControlName="MailingProvinceStateId" required>
+                                    <mat-option></mat-option>
+                                    <mat-option value="on">Ontario</mat-option>
+                                </mat-select>                              
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-container col-md-6 mb-3">
+                            <mat-form-field>
+                                <input matInput placeholder="City/Town" formControlName="MailingCity" required>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                    <!-- Street Address Line 1 and 2 row-->
+                    <div class="form-row">
+
+                        <div class="form-container col-md-6 mb-3">
+                            <mat-form-field>
+                                <input matInput placeholder="Street address line 1"
+                                    formControlName="MailingAddressLine1" required>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-container col-md-6 mb-3">
+                            <mat-form-field>
+                                <input matInput placeholder="Street address line 2"
+                                    formControlName="MailingAddressLine2" required>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                    <!-- Postal code/zip code row-->
+                    <div class="form-row">
+                        <div class="form-container col-md-6 mb-3">
+                            <mat-form-field>
+                                <input matInput placeholder="Postal code/zip code" formControlName="MailingPostalCode"
+                                    required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--Next button for the first page-->
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">                    
+                        <button mat-raised-button color="primary" matStepperNext (click)="stepper.next()">Next</button>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </mat-step>
+
+    <!--Second stepper page-->
+    <mat-step [stepControl]="StepTwoProgramAvail" >
+        <form [formGroup]="StepTwoProgramAvail" #programAvailability="ngForm" (ngSubmit)="form2()">
+            <ng-template matStepLabel>Program Availability</ng-template>
+            <mat-form-field>
+                <input matInput placeholder="Address" formControlName="Address" required>
+            </mat-form-field>
+            <div>
+                <button mat-raised-button matStepperPrevious>Back</button>&nbsp;
+                <button mat-raised-button color="primary" matStepperNext>Next</button>
+            </div>
+        </form>
+    </mat-step>
+
+     <!--Third stepper page-->
+    <mat-step [stepControl]="StepTreeEnglishPro">
+        <form [formGroup]="StepTreeEnglishPro" #pthirdForm="ngForm" (ngSubmit)="form3()">
+            <ng-template matStepLabel>Confirm & submit</ng-template>
+            <mat-checkbox formControlName="agreementCtrl" (change)="changeCheck($event)"> I agree to....</mat-checkbox>
+            <div>
+                <button mat-raised-button matStepperPrevious>Back</button> &nbsp;
+                <button mat-raised-button [disabled]="disabledAgreement || StepTreeEnglishPro.invalid" color="primary"
+                    matStepperNext type="submit">Submit</button>
+                &nbsp;
+                <button mat-raised-button color="warn" (click)="stepper.reset()">Reset</button>
+            </div>
+        </form>
+    </mat-step>
+
+</mat-horizontal-stepper>

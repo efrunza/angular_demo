@@ -1,0 +1,36 @@
+@import '../abstracts/mixins';
+@import '../abstracts/variables';
+@import '../theme';
+html,
+body {
+  @include reset-element-margin-padding(0, 0);
+  width: 100%;
+  height: fit-content;
+  background-color: $grey-color;
+  font-family: $main-font-family, sans-serif;
+  @include seneca-fonts-common($medium-font-weight, $medium-font-size);
+  color: $seneca-default-text-color;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+li,
+p {
+  @include reset-element-margin-padding(0, 0);
+}
+
+ul {
+  list-style-position: inside;
+}
+
+a {
+  text-decoration: none;
+  color: mat-color($seneca-app-primary, $semi-bold-font-weight);
+}
+a:hover {
+  text-decoration: underline;
+}

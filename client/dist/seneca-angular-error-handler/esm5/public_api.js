@@ -1,0 +1,11 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/*
+ * Public API Surface of seneca-angular-error-handler
+ */
+export { SenecaAngularErrorHandlerService } from './lib/seneca-angular-error-handler.service';
+export { SenecaAngularErrorHandlerComponent } from './lib/seneca-angular-error-handler.component';
+export { SenecaAngularErrorHandlerModule } from './lib/seneca-angular-error-handler.module';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljX2FwaS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL3NlbmVjYS1hbmd1bGFyLWVycm9yLWhhbmRsZXIvIiwic291cmNlcyI6WyJwdWJsaWNfYXBpLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFJQSxpREFBYyw0Q0FBNEMsQ0FBQztBQUMzRCxtREFBYyw4Q0FBOEMsQ0FBQztBQUM3RCxnREFBYywyQ0FBMkMsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIi8qXG4gKiBQdWJsaWMgQVBJIFN1cmZhY2Ugb2Ygc2VuZWNhLWFuZ3VsYXItZXJyb3ItaGFuZGxlclxuICovXG5cbmV4cG9ydCAqIGZyb20gJy4vbGliL3NlbmVjYS1hbmd1bGFyLWVycm9yLWhhbmRsZXIuc2VydmljZSc7XG5leHBvcnQgKiBmcm9tICcuL2xpYi9zZW5lY2EtYW5ndWxhci1lcnJvci1oYW5kbGVyLmNvbXBvbmVudCc7XG5leHBvcnQgKiBmcm9tICcuL2xpYi9zZW5lY2EtYW5ndWxhci1lcnJvci1oYW5kbGVyLm1vZHVsZSc7XG4iXX0=

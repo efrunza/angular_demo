@@ -1,0 +1,162 @@
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-template>
+
+<form
+  *ngIf="!isLoading; else loading"
+  [formGroup]="programAvailabilityForm"
+  (ngSubmit)="onSaveClick($event)"
+  fxLayout="row wrap"
+  fxLayoutAlign="center start"
+  fxFlexFill
+>
+  <div fxLayout="row" fxLayoutAlign="center" fxFlex="1 1 100%">
+    <mat-card-header
+      class="seneca-card-header"
+      fxLayout="row"
+      fxLayoutGap="2em"
+      fxLayoutAlign="start center"
+      fxFlex="calc(100% + 32px)"
+    >
+      <mat-card-title class="seneca-card-title">Programs Available by Semester</mat-card-title>
+    </mat-card-header>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="center" fxFlex="1 1 100%">
+    <mat-card-content
+      class="seneca-card-content"
+      fxLayout="column"
+      fxLayoutAlign="start start"
+      fxLayoutGap="1em"
+      fxFlex="85%"
+      fxFlex.lt-md="95%"
+      fxFlexFill
+    >
+      <p fxLayout="row" fxFlex.lt-md="1 1 100%" class="mat-h2">
+        Below is a list of possible programs. When you reach the "Program
+        Choice" in step 4 you can choose up to three programs.
+      </p>
+
+      <div
+        fxLayout="row"
+        class="full-width"
+        fxLayout.lt-md="row wrap"
+        fxLayoutGap="2em"
+        fxFlexAlign="space-between stretch"
+        fxLayoutGap.lt-md="0"
+        fxFlex="1 1 100%"
+      >
+        <label
+          fxLayout="row"
+          fxLayoutAlign="center center"
+          fxLayoutAlign.lt-md="start start"
+          fxFlex.lt-md="1 1 100%"
+        >
+          When are you going to start your study?
+        </label>
+        <div fxLayout="row wrap" fxLayout.lt-md="column" fxFlex.lt-md="grow">
+          <mat-form-field fxFlex="1 1 15em" fxFlex.lt-md="1 1 100%">
+            <input
+              class="pointer-cursor"
+              id="programStartDate"
+              formControlName="programStartDate"
+              matInput
+              (click)="programStartDatePicker.open()"
+              [matDatepicker]="programStartDatePicker"
+              [matDatepickerFilter]="dateFilter"
+              [min]="minDate"
+              [max]="maxDate"
+              placeholder="Program start date"
+              required
+              readonly
+              #programStartDate
+            />
+            <mat-datepicker-toggle matSuffix [for]="programStartDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker
+              [touchUi]="isMobile"
+              (monthSelected)="onMonthSelected($event, programStartDatePicker)"
+              [startAt]="initialDate"
+              startView="multi-year"
+              #programStartDatePicker
+            ></mat-datepicker>
+            <mat-hint>Date format: Year/Month</mat-hint>
+            <mat-error *ngIf="this.programAvailabilityForm.get('programStartDate').invalid">
+                {{getErrorMessages( this.programAvailabilityForm.get('programStartDate'))}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end" fxFlex="1 1 auto">
+          <mat-form-field appearance="outline" fxFlex="100%">
+            <mat-icon matSuffix>search</mat-icon>
+            <mat-label>Search a program</mat-label>
+            <input matInput (keyup)="applyFilter($event.target.value)" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div fxLayout="column" fxFlexFill class="mat-elevation-z4">
+        <div fxLayout="row" fxFlex="1 1 100%" class="table-responsive">
+          <table fxFlexFill mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="programCode">
+              <th mat-header-cell *matHeaderCellDef>Program Code</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.programCode }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="programName">
+              <th mat-header-cell *matHeaderCellDef>Program Name</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.programDesc }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="campus">
+              <th mat-header-cell *matHeaderCellDef>Campus</th>
+              <td mat-cell *matCellDef="let element">{{ element.campus }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </div>
+
+        <div fxLayout="column" fxLayoutGap="1em">
+          <div *ngIf="(!programListData.list && !programListData.loading) || (programListData.list.length === 0 && !programListData.loading)">
+            <mat-label class="senecaTableText senecaImportantText">
+              Sorry, there are NO available programs for the selected date
+              </mat-label>
+          </div>
+
+          <ng-container *ngIf="programAvailabilityForm.get('programStartDate').invalid && !programListData.loading">
+            <label
+              class="senecaTableText senecaImportantText" for="programStartDate">
+              Please select the date on which you would like to start your study
+              in order to view the latest Program Availability List
+            </label>
+          </ng-container>
+
+          <mat-progress-bar *ngIf="programListData.loading" mode="indeterminate"></mat-progress-bar>
+          
+        </div>
+
+        <mat-paginator
+          [pageSizeOptions]="[10, 20, 50]"
+          showFirstLastButtons
+        ></mat-paginator>
+      </div>
+    </mat-card-content>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="center" fxFlex="1 1 100%">
+    <mat-card-actions
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+      fxFlex="grow"
+    >
+      <button mat-button matStepperPrevious>Previous</button>
+      <button mat-raised-button color="primary">Continue</button>
+    </mat-card-actions>
+  </div>
+</form>

@@ -1,0 +1,15 @@
+<p>
+  By clicking "OK", your files will be uploaded to us to review your
+  application.
+</p>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="data.ok"
+    cdkFocusInitial
+  >
+    Ok
+  </button>
+</div>

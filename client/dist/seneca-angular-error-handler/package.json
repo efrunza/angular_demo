@@ -1,0 +1,21 @@
+{
+  "name": "seneca-angular-error-handler",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^7.2.0",
+    "@angular/core": "^7.2.0"
+  },
+  "main": "bundles/seneca-angular-error-handler.umd.js",
+  "module": "fesm5/seneca-angular-error-handler.js",
+  "es2015": "fesm2015/seneca-angular-error-handler.js",
+  "esm5": "esm5/seneca-angular-error-handler.js",
+  "esm2015": "esm2015/seneca-angular-error-handler.js",
+  "fesm5": "fesm5/seneca-angular-error-handler.js",
+  "fesm2015": "fesm2015/seneca-angular-error-handler.js",
+  "typings": "seneca-angular-error-handler.d.ts",
+  "metadata": "seneca-angular-error-handler.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

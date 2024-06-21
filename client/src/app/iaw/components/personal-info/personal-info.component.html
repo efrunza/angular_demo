@@ -1,0 +1,441 @@
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-template>
+
+<!-- form starts here -->
+<form *ngIf="!pageLoadState.loading && !(saving$ | async); else loading" [formGroup]="personalInfoForm"
+  (ngSubmit)="onSaveClick($event)" fxLayout="row wrap" fxLayoutAlign="center start" fxFlexFill>
+  <div fxLayout="row" fxLayoutAlign="center" fxFlex="1 1 100%">
+    <mat-card-header class="seneca-card-header" fxLayout="row" fxLayoutGap="2em" fxLayoutAlign="start center"
+      fxFlex="calc(100% + 32px)">
+      <mat-card-title class="seneca-card-title">
+        <span *ngIf="userType === userTypeEnum.Applicant; else showAgent">Personal Information</span>
+      </mat-card-title>
+      <ng-template #showAgent>
+        <span>Applicant Information</span>
+      </ng-template>
+    </mat-card-header>
+  </div>
+
+  <!-- Personal Information section starts here -->
+  <div fxLayout="row" fxLayoutAlign="center" fxFlex="1 1 100%">
+    <mat-card-content class="seneca-card-content" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="1em"
+      fxFlex="85%" fxFlex.lt-md="95%" fxFlexFill>
+      <div class="floating-hint" fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.lt-md="start center"
+        fxFlex.lt-md="1 1 100%">
+        <p class="mat-h2">
+          <span class="senecaBold">Note: </span> Your progress in completing
+          this application is saved to your current logged-in account, you may
+          exit and resume this application if needed.
+        </p>
+      </div>
+      <div fxLayout="row" fxShow.lt-md fxFlexFill>
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start center" fxLayoutAlign.lt-md="default default"
+          fxLayoutGap="2em" fxLayoutGap.lt-md="1em" fxFlex="1 1 100%">
+          <div class="floating-hint" fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.lt-md="start center"
+            fxFlex.lt-md="1 1 100%">
+            <label (click)="prevStuSlide.toggle()">
+              Have you previously applied to or attended Seneca college?
+            </label>
+            <mat-slide-toggle labelPosition="before" formControlName="isPreviousStudent" #prevStuSlide>
+            </mat-slide-toggle>
+          </div>
+
+          <div fxLayout="row">
+            <mat-form-field fxFlex="1 1 15em" fxFlex.lt-md="1 1 100%"
+              *ngIf="personalInfoForm.controls['isPreviousStudent'].value">
+              <input matInput placeholder="Previous Student ID" formControlName="previousStudentID"
+                [required]="personalInfoForm.controls['isPreviousStudent'].value" #previousStudentID />
+              <mat-error *ngIf="personalInfoForm.get('previousStudentID').invalid">
+                {{DisplayErrorMessage(previousStudentID)}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="column" fxLayoutGap="1em">
+        <div fxLayout="row">
+          <mat-form-field fxFlex="1 1 7em" fxFlex.lt-md="1 1 100%" #title>
+            <mat-select placeholder="Title" required formControlName="title">
+              <mat-option value="Mr"> Mr </mat-option>
+              <mat-option value="Miss"> Miss </mat-option>
+              <mat-option value="Ms"> Ms </mat-option>
+              <mat-option value="Mrs"> Mrs </mat-option>
+            </mat-select>
+            <mat-error *ngIf="personalInfoForm.get('title').invalid">
+              {{DisplayErrorMessage(title)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="floating-hint senecaImportantText" fxLayout="row" fxLayoutAlign="center center"
+          fxLayoutAlign.lt-md="start center" fxFlex.lt-md="1 1 100%">
+          <p class="mat-h2">
+            <span class="senecaBold">Note: </span> Enter your name as it appears
+            on your passport. If only one name appears on your passport, please
+            enter it in the Surname field
+          </p>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="default center">
+          <mat-form-field fxFlex="1 1 25em" fxFlex.lt-md="1 1 100%" #surName>
+            <mat-label>Surname/Family Name</mat-label>
+            <input matInput matAutosize enabled required formControlName="surName" />
+            <mat-error *ngIf="personalInfoForm.get('surName').invalid">
+              {{DisplayErrorMessage(surName)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row">
+          <mat-form-field fxFlex="1 1 20em" fxFlex.lt-md="1 1 100%">
+            <input matInput placeholder="Given names" formControlName="firstName" #firstName />
+            <mat-error *ngIf="personalInfoForm.get('firstName').invalid">
+              {{DisplayErrorMessage(firstName)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row">
+          <mat-form-field fxFlex="1 1 10em" fxFlex.lt-md="1 1 100%">
+            <mat-select placeholder="Gender" required formControlName="gender" #gender>
+              <mat-option value="m">Male</mat-option>
+              <mat-option value="f">Female</mat-option>
+              <mat-option value="x">Other gender </mat-option>
+              <mat-option value="u">Unknown</mat-option>
+            </mat-select>
+            <mat-error *ngIf="personalInfoForm.get('gender').invalid">
+              {{DisplayErrorMessage(gender)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="1em">
+          <mat-form-field fxFlex="1 1 30%" fxFlex.lt-md="1 1 100%">
+            <input matInput [matDatepicker]="dob_picker" placeholder="Date of Birth" required formControlName="dob"
+              [max]="maxDate" />
+            <mat-datepicker-toggle matSuffix [for]="dob_picker"></mat-datepicker-toggle>
+            <mat-datepicker startView="multi-year" #dob_picker></mat-datepicker>
+            <mat-error *ngIf="personalInfoForm.get('dob').invalid">
+              {{DisplayErrorMessage(dob_picker)}}
+            </mat-error>
+            <mat-hint>Format: MM/DD/YYYY</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row">
+          <mat-form-field fxFlex="1 1 15em" fxFlex.lt-md="1 1 100%">
+            <mat-select matNativeControl placeholder="Birth Country" required formControlName="countryOB" #countryOB>
+              <ng-container *ngFor="let country of countryList">
+                <mat-option *ngIf="country.code !== 'CAN'" [value]="country.code">
+                  {{ country.name }}
+                </mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error *ngIf="personalInfoForm.get('countryOB').invalid">
+              {{DisplayErrorMessage(countryOB)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row">
+          <mat-form-field fxFlex="1 1 15em" fxFlex.lt-md="1 1 100%">
+            <mat-select matNativeControl placeholder="Citizenship Country" required formControlName="countryOC"
+              #countryOC>
+              <ng-container *ngFor="let country of countryList">
+                <mat-option *ngIf="country.code !== 'CAN'" [value]="country.code">
+                  {{ country.name }}
+                </mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error *ngIf="personalInfoForm.get('countryOC').invalid">
+              {{DisplayErrorMessage(countryOC)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start center" fxLayoutAlign.lt-md="default default"
+          fxLayoutGap="2em" fxLayoutGap.lt-md="1em" fxFlex="1 1 100%">
+          <div fxLayout="row" fxFlex.lt-md="1 1 100%" fxFlexOrder.lt-md="2">
+            <mat-form-field fxFlex="1 1 15em" fxFlex.lt-md="1 1 100%">
+              <mat-select matNativeControl placeholder="Application Country" required formControlName="countryOA"
+                #countryOA id="countryOA">
+                <mat-option *ngFor="let country of countryList" [value]="country.code">
+                  {{ country.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="personalInfoForm.get('countryOA').invalid">
+                {{DisplayErrorMessage(countryOA)}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <label for="countryOA" fxFlex.lt-md="1 1 100%" fxFlexOrder.lt-md="1">
+            In which country will you be applying and submitting your Visa Application?
+          </label>
+        </div>
+
+        <div fxLayout="row">
+          <mat-form-field fxFlex="1 1 15em" fxFlex.lt-md="1 1 100%">
+            <mat-select matNativeControl placeholder="Primary Language" required formControlName="primaryLang"
+              #primaryLang>
+              <mat-option *ngFor="let language of languageList" [value]="language.code">
+                {{ language.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="personalInfoForm.get('primaryLang').invalid">
+              {{DisplayErrorMessage(primaryLang)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row wrap">
+          <mat-form-field fxFlex="1 1 20em" fxFlex.lt-md="1 1 100%">
+            <input type="email" matInput placeholder="Email Address" required formControlName="email" #email
+              [readonly]="personalEmail" />
+            <mat-hint>Email is filled using your login information</mat-hint>
+            <mat-error *ngIf="personalInfoForm.get('email').invalid">
+              {{DisplayErrorMessage(email)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+  </div>
+
+  <!-- Personal Information section ends here -->
+  <div fxLayout="row" fxLayoutAlign="center" fxFlex="1 1 100%">
+    <mat-card-header class="seneca-card-header" fxLayout="row" fxLayoutGap="2em" fxLayoutAlign="start center"
+      fxFlex="calc(100% + 32px)">
+      <mat-card-title class="seneca-card-title" id="stuPermaAddr">Primary Address</mat-card-title>
+    </mat-card-header>
+  </div>
+
+  <!-- permanent address section starts here -->
+  <div fxLayout="row" fxLayoutAlign="center" fxFlex="1 1 100%">
+    <mat-card-content class="seneca-card-content" formGroupName="permanentAddress" fxLayout="column"
+      fxLayoutAlign="start start" fxLayoutGap="1em" fxFlex="85%" fxFlex.lt-md="95%" fxFlexFill>
+      <div class="floating-hint" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 1 100%">
+        <label class="mat-h2">
+          <span class="senecaBold">Note: </span> This is the address that will
+          appear on the letter of acceptance should your application be accepted
+        </label>
+      </div>
+
+      <div fxLayout="column" fxLayoutGap="1em" fxFlexFill>
+        <div fxLayout="row">
+          <mat-form-field fxFlex="1 1 14em" fxFlex.lt-md="1 1 100%">
+            <mat-select matNativeControl placeholder="Country" required formControlName="country" #country #country>
+              <mat-option *ngFor="let country of countryList" [value]="country.code">
+                {{ country.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="personalInfoForm.get('permanentAddress').get('country').invalid">
+              {{DisplayErrorMessage(country)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" *ngIf="country && permanentProvinceList.length > 0">
+          <mat-form-field fxFlex="1 1 30%" fxFlex.lt-md="1 1 100%">
+            <mat-select placeholder="Province/State" required formControlName="province" #province>
+              <mat-option *ngFor="let province of permanentProvinceList" [value]="province.code">
+                {{ province.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="personalInfoForm.get('permanentAddress').get('province').invalid">
+              {{DisplayErrorMessage(province)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row">
+          <mat-form-field fxFlex="1 1 10em" fxFlex.lt-md="1 1 100%">
+            <input matInput placeholder="City/Town" required formControlName="city" #city />
+            <mat-error *ngIf="personalInfoForm.get('permanentAddress').get('city').invalid">
+              {{DisplayErrorMessage(city)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row">
+          <mat-form-field fxFlex="1 1 30em" fxFlex.lt-md="1 1 100%">
+            <input matInput placeholder="Street Address" required formControlName="stAddress" #stAddress />
+            <mat-error *ngIf="personalInfoForm.get('permanentAddress').get('stAddress').invalid">
+              {{DisplayErrorMessage(stAddress)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row">
+          <mat-form-field fxFlex="1 1 30em" fxFlex.lt-md="1 1 100%">
+            <input matInput placeholder="Street Address 2" formControlName="stAddress2" #stAddress2 />
+            <mat-error *ngIf="personalInfoForm.get('permanentAddress').get('stAddress2').invalid">
+              {{DisplayErrorMessage(stAddress2)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start center" fxLayoutAlign.lt-md="default default"
+          fxLayoutGap="2em" fxLayoutGap.lt-md="1em" fxFlex="0 1 100%">
+          <mat-form-field fxFlex="0 1 50%" fxFlex.lt-md="1 1 100%">
+            <input matInput placeholder="Postal Code/Zip" required id="zipCode" formControlName="zipCode" #zipCode />
+            <mat-error *ngIf="personalInfoForm.get('permanentAddress').get('zipCode').invalid">
+              {{DisplayErrorMessage(zipCode)}}
+            </mat-error>
+            <mat-hint>If your country does not have Postal/Zip code,
+              <a class="pointer-cursor" (click)="fillDefaultZipCode()">click here</a>
+            </mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start center" fxLayoutAlign.lt-md="default default"
+          fxLayoutGap="2em" fxLayoutGap.lt-md="1em" fxFlex="1 1 100%">
+          <div fxLayout="row" fxFlexOrder.lt-md="2">
+            <mat-form-field fxFlex="1 1 14em" fxFlex.lt-md="1 1 100%">
+              <app-custom-tel-control formControlName="phone" placeholder="Primary Phone Number" required #phone>
+              </app-custom-tel-control>
+              <mat-icon matSuffix>phone</mat-icon>
+              <mat-hint> Example: (1) 4164915050 </mat-hint>
+              <mat-error *ngIf="personalInfoForm.get('permanentAddress').get('phone').invalid">
+                {{DisplayErrorMessage(phone)}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <label for="phone" fxFlex.lt-md="1 1 100%" fxFlexOrder.lt-md="1">
+            Use only digits starting with country code in parentheses following city/town code and phone
+          </label>
+        </div>
+
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start center" fxLayoutAlign.lt-md="default default"
+          fxLayoutGap="2em" fxLayoutGap.lt-md="1em" fxFlex="1 1 100%">
+          <div fxLayout="row" fxFlexOrder.lt-md="2">
+            <mat-form-field fxFlex="1 1 14em" fxFlex.lt-md="1 1 100%">
+              <app-custom-tel-control formControlName="cell" placeholder="Secondary Phone Number" #cell>
+              </app-custom-tel-control>
+              <mat-icon matSuffix>phone</mat-icon>
+              <mat-hint> Example: (1) 4164915050 </mat-hint>
+              <mat-error *ngIf="personalInfoForm.get('permanentAddress').get('cell').invalid">
+                {{DisplayErrorMessage(cell)}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <label for="cell" fxFlex.lt-md="1 1 100%" fxFlexOrder.lt-md="1">
+            Use only digits starting with country code in parentheses following
+            city/town code and phone
+          </label>
+        </div>
+      </div>
+    </mat-card-content>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="center" fxFlex="1 1 100%">
+    <mat-card-header class="seneca-card-header" fxLayout="row" fxLayoutGap="2em" fxLayoutAlign="start center"
+      fxFlex="calc(100% + 32px)">
+      <mat-card-title class="seneca-card-title">Mailing Address</mat-card-title>
+    </mat-card-header>
+  </div>
+
+  <!-- Student Mailing section starts here -->
+  <div fxLayout="row" fxLayoutAlign="center" fxFlex="1 1 100%">
+    <mat-card-content class="seneca-card-content" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="1em"
+      fxFlex="85%" fxFlex.lt-md="95%" fxFlexFill>
+      <div class="floating-hint" fxLayout="row wrap" fxLayoutAlign="center center" fxFlex.lt-md="1 1 100%">
+        <label for="mailingAddressSlide">Is your mailing address same as your primary address?</label>
+        <mat-slide-toggle labelPosition="before" formControlName="currAddrSameAsPerm" #mailingAddressSlide>
+        </mat-slide-toggle>&nbsp; YES
+      </div>
+
+      <div formGroupName="mailingAddress" *ngIf="!personalInfoForm.controls['currAddrSameAsPerm'].value"
+        fxLayout="column" fxLayoutGap="1em" fxFlexFill>
+        <div fxLayout="row">
+          <mat-form-field fxFlex="1 1 14em" fxFlex.lt-md="1 1 100%">
+            <mat-select matNativeControl placeholder="Country" required formControlName="country"
+              #mailingAddress_country>
+              <mat-option *ngFor="let country of countryList" [value]="country.code">
+                {{ country.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="personalInfoForm.get('mailingAddress').get('country').invalid">
+              {{DisplayErrorMessage(mailingAddress_country)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" *ngIf="country && mailingProvinceList.length > 0">
+          <mat-form-field fxFlex="1 1 10em" fxFlex.lt-md="1 1 100%">
+            <mat-select placeholder="Province/State" required formControlName="province" #mailingAddress_province>
+              <mat-option *ngFor="let province of mailingProvinceList" [value]="province.code">
+                {{ province.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="personalInfoForm.get('mailingAddress').get('province').invalid">
+              {{DisplayErrorMessage(mailingAddress_province)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row">
+          <mat-form-field fxFlex="1 1 10em" fxFlex.lt-md="1 1 100%">
+            <input matInput placeholder="City/Town" required formControlName="city" #mailingAddress_city />
+            <mat-error *ngIf="personalInfoForm.get('mailingAddress').get('city').invalid">
+              {{DisplayErrorMessage(mailingAddress_city)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row">
+          <mat-form-field fxFlex="1 1 30em" fxFlex.lt-md="1 1 100%">
+            <input matInput placeholder="Street Address" required formControlName="stAddress"
+              #mailingAddress_stAddress />
+            <mat-error *ngIf="personalInfoForm.get('mailingAddress').get('stAddress').invalid">
+              {{DisplayErrorMessage(mailingAddress_stAddress)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row">
+          <mat-form-field fxFlex="1 1 30em" fxFlex.lt-md="1 1 100%">
+            <input matInput placeholder="Street Address 2" formControlName="stAddress2" #mailingAddress_stAddress2 />
+            <mat-error *ngIf="personalInfoForm.get('mailingAddress').get('stAddress2').invalid">
+              {{DisplayErrorMessage(mailingAddress_stAddress2)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row">
+          <mat-form-field fxFlex="1 1 10em" fxFlex.lt-md="1 1 100%">
+            <input matInput placeholder="Postal Code/Zip" required formControlName="zipCode" #mailingAddress_zipCode />
+            <mat-error *ngIf="personalInfoForm.get('mailingAddress').get('zipCode').invalid">
+              {{DisplayErrorMessage(mailingAddress_zipCode)}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+  </div>
+
+  <!-- Student Mailing Address ends here -->
+  <p class="privacy-text" fxLayout="row" fxLayoutAlign="strech" fxFlex="grow">
+    Seneca uses the information you provide to identify and communicate with
+    you, assess your eligibility for the program(s) for which you are applying
+    and, if you are admitted as a student, to administer your enrolment and
+    course of study at Seneca. Seneca will also use the information to compile
+    statistics, on the number of students applying or attending Seneca from a
+    particular country, for example, to assist it with program planning and for
+    management and quality assurance purposes. Seneca discloses information with
+    your consent and as otherwise permitted or required by law.
+  </p>
+
+  <div fxLayout="row" fxLayoutAlign="center" fxFlex="1 1 100%">
+
+    <mat-card-actions fxLayout=" row" fxLayoutAlign="end center" fxFlex="grow">
+
+      <button mat-raised-button color="primary" [disabled]="saving$ | async">
+        Save &amp; Continue
+      </button>
+    </mat-card-actions>
+  </div>
+</form>
+<!-- form ends here -->

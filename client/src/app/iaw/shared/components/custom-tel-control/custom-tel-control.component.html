@@ -1,0 +1,34 @@
+<div
+  [formGroup]="phone"
+  class="example-tel-input-container"
+  appearance="standard"
+>
+  <span class="example-tel-input-spacer">&#40;</span>
+
+  <input
+    class="example-tel-input-element"
+    #countryCode
+    formControlName="countryCode"
+    maxlength="3"
+    size="3"
+    required
+    (input)="_handleInput()"
+  />
+  <span class="example-tel-input-spacer">&#41;</span>
+
+  <!-- <span class="example-tel-input-spacer">&nbsp;</span> -->
+
+  <input
+    class="customNum example-tel-input-element"
+    #number
+    formControlName="number"
+    maxlength="12"
+    size="12"
+    required
+    (input)="_handleInput()"
+  />
+</div>
+
+<!-- Copyright 2018 Google Inc. All Rights Reserved.
+            Use of this source code is governed by an MIT-style license that
+            can be found in the LICENSE file at http://angular.io/license -->

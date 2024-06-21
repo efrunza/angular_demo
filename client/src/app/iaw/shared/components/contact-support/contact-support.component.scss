@@ -1,0 +1,17 @@
+.help-icon {
+  position: sticky;
+  bottom: 3rem;
+  animation: fade-out 2s 10s forwards;
+  opacity: 0;
+  float: right;
+  right: 2em;
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,7 @@
+@import '../../node_modules/@angular/material/theming';
+
+$custom-typography: mat-typography-config(
+  $font-family: '"Open Sans",sans-serif',
+  $body-1: mat-typography-level(16px, 24px, 400),
+  $title: mat-typography-level(18px, 32px, 500)
+);
