@@ -1,9 +1,9 @@
 import { commonEnv } from './environment.common';
 
-const clientId = 'b4b2ba85-f33b-4770-8521-10a76522b8d8';
-const tenant = 'iapdevb2c.onmicrosoft.com';
-const scopes = ['https://iapdevb2c.onmicrosoft.com/api/read'];
-const appUrl = 'https://iap-appsvc-web01dv.azurewebsites.net';
+const clientId = '';
+const tenant = '.onmicrosoft.com';
+const scopes = ['https://.onmicrosoft.com/api/read'];
+const appUrl = 'https://.azurewebsites.net';
 const azureInstance = commonEnv.azureInstance_v2;
 
 export const environment = {
@@ -14,7 +14,7 @@ export const environment = {
   apiUrl: 'https://iap-apims-api01dv.azure-api.net/api/iwa-api',
   // TODO: remove in prod
   // apiUrl: 'http://localhost:5200/iwa-api',
-  apiSubscriptionKey: 'sdfsdf',
+  apiSubscriptionKey: '',
   apiSubscriptionEnabled: true,
   agentSignInPolicy: commonEnv.agentSignInPolicy,
   applicantSignInPolicy: commonEnv.applicantSignInPolicy,
